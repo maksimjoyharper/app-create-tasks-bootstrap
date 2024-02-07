@@ -11,11 +11,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.1",
-    "cv-graphql": "^2.3.0",
+    "@apollo/react-hooks": "^4.0.0",
+    "cv-graphql": "^2.4.4",
     "graphql": "^16.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0"
+    "react-router-dom": "^6.22.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

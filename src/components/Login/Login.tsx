@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
-import "./Form.css";
-import { useMutation } from "@apollo/client";
-import { SIGN_NUP } from "../apollo/mutation";
-// import { useNavigate } from "react-router-dom";
+import { gql, useLazyQuery } from "@apollo/client";
+import { useState } from "react";
 
-export const FormLogin = () => {
+const LOGIN = gql`
+  query Login($email: String!, $password: String!) {
+    login(auth: { email: $email, password: $password }) {
+      access_token
+    }
+  }
+`;
+
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [token, setToken] = useState("");
-
-  const [signup, { data, loading }] = useMutation(SIGN_NUP);
-  // const navigate = useNavigate();
+  const [login, { called, data, loading }] = useLazyQuery(LOGIN, {
+    variables: { email: email, password: password },
+  });
 
   return (
     <>
@@ -19,13 +23,13 @@ export const FormLogin = () => {
         action=""
         onSubmit={(e) => {
           e.preventDefault();
-          signup({
+          login({
             variables: {
-              email: email,
-              password: password,
+              called: !called,
             },
           });
-          console.log(data, loading);
+          loading && console.log(data);
+          !called && console.log(data, loading);
 
           // loading && setToken(data.signup.access_token);
 
@@ -58,7 +62,7 @@ export const FormLogin = () => {
           //   e.preventDefault();
           // }}
         >
-          Signup
+          Login
         </button>
       </form>
     </>
